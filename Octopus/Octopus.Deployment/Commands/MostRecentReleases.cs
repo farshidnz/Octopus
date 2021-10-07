@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using FluentValidation;
 using MediatR;
 using Microsoft.Extensions.Logging;
 using Octopus.Deployment.Models;
@@ -42,7 +43,7 @@ namespace Octopus.Deployment.Commands
                                 string.Equals(d.ReleaseId, release.Id, StringComparison.CurrentCultureIgnoreCase)
                                 && string.Equals(d.EnvironmentId, environment.Id,
                                     StringComparison.CurrentCultureIgnoreCase));
-                        
+
                         if (recentDeployment != null)
                         {
                             _logger.LogInformation(
@@ -54,6 +55,18 @@ namespace Octopus.Deployment.Commands
                 }
 
                 return keptReleases;
+            }
+
+            public sealed class MostRecentReleasesHandlerValidator : AbstractValidator<MostRecentReleases>
+            {
+                public MostRecentReleasesHandlerValidator()
+                {
+                    RuleFor(request => request)
+                        .NotNull();
+                    
+                    RuleFor(request => request.ProjectId)
+                        .NotNull();
+                }
             }
         }
     }
