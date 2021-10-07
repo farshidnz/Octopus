@@ -1,0 +1,8 @@
+**/.vs/*
+**/.idea/*
+**/bin/*
+**/obj/*
+**/Properties/PublishProfiles/*
+**/*.user
+**/.vscode/*
+**/.history/*
