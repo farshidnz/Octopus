@@ -13,9 +13,6 @@ namespace Octopus.Deployment.Tests.Scenarios
         private readonly HttpResponseMessage _result;
         private readonly WebHost<Startup> _webHost;
 
-        public readonly string _projectId = "Project-1";
-        private readonly Release _expectedRelease;
-
         public BadRequestRoute()
         {
             _webHost = new WebHost<Startup>(services => { });

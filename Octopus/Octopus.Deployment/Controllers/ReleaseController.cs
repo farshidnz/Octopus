@@ -40,7 +40,7 @@ namespace Octopus.Deployment.Controllers
         [ProducesResponseType(typeof(string), StatusCodes.Status400BadRequest)]
         public async Task<ActionResult<List<Release>>> DetermineReleases([FromRoute] string projectId, [FromBody] ReleaseRequests request)
         {
-            var result = await _sender.Send(new MostRecentReleases
+            var result = await _sender.Send(new LatestReleases
             {
                 Deployments = request.Deployments,
                 Environments = request.Environments,

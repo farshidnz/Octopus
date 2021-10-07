@@ -11,23 +11,23 @@ using Environment = Octopus.Deployment.Models.Environment;
 
 namespace Octopus.Deployment.Commands
 {
-    public record MostRecentReleases : IRequest<List<Release>>
+    public record LatestReleases : IRequest<List<Release>>
     {
         public string ProjectId { get; init; }
         public List<Release> Releases { get; init; }
         public List<Models.Deployment> Deployments { get; init; }
         public List<Environment> Environments { get; init; }
 
-        private sealed class MostRecentReleasesHandler : IRequestHandler<MostRecentReleases, List<Release>>
+        public sealed class LatestReleasesHandler : IRequestHandler<LatestReleases, List<Release>>
         {
-            private readonly ILogger<MostRecentReleasesHandler> _logger;
+            private readonly ILogger<LatestReleasesHandler> _logger;
 
-            public MostRecentReleasesHandler(ILogger<MostRecentReleasesHandler> logger)
+            public LatestReleasesHandler(ILogger<LatestReleasesHandler> logger)
             {
                 _logger = logger;
             }
 
-            public async Task<List<Release>> Handle(MostRecentReleases request, CancellationToken cancellationToken)
+            public async Task<List<Release>> Handle(LatestReleases request, CancellationToken cancellationToken)
             {
                 List<Release> keptReleases = new();
                 var projectReleases = request.Releases.Where(r =>
@@ -57,9 +57,9 @@ namespace Octopus.Deployment.Commands
                 return keptReleases;
             }
 
-            public sealed class MostRecentReleasesHandlerValidator : AbstractValidator<MostRecentReleases>
+            public sealed class LatestReleasesHandlerValidator : AbstractValidator<LatestReleases>
             {
-                public MostRecentReleasesHandlerValidator()
+                public LatestReleasesHandlerValidator()
                 {
                     RuleFor(request => request)
                         .NotNull();
